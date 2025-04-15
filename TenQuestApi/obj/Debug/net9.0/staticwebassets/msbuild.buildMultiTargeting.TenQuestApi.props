@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\TenQuestApi.props" />
+</Project>
