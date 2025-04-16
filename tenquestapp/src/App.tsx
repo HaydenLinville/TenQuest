@@ -4,6 +4,7 @@ import  Quizzes, { Quiz} from './components/Quiz';
 import './App.css'
 import { get } from './util/http';
 import { Questions } from './components/Questions';
+import Form from './components/Form';
 
 type RawQuizData = {
   id: number;
@@ -44,6 +45,7 @@ function App() {
   return (
    <div>
     {content}
+    <Form></Form>
    </div>
   )
 }

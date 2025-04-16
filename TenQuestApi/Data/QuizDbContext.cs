@@ -1,13 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using TenQuestApi.Models;
 
-namespace TenQuestApi.Data 
+namespace TenQuestApi.Data
 {
 
     public class QuizDbContext : DbContext
     {
-        public QuizDbContext(DbContextOptions<QuizDbContext> options): base(options) {}
-        public DbSet<Quiz> Quizzes{get; set;}
+        public QuizDbContext(DbContextOptions<QuizDbContext> options) : base(options) { }
+        public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<Questions> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
         // protected override void OnConfiguring(DbContextOptionsBuilder options)
         // {
         //     if(!options.IsConfigured){
@@ -15,9 +17,9 @@ namespace TenQuestApi.Data
         //         options => options.EnableRetryOnFailure());
         //     }
         // }
- 
 
-        
+
+
 
     }
 
