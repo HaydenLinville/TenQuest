@@ -4,6 +4,6 @@ export type Questions = {
 id: number;
 text: string;
 answers: Answer[];
-correctAnswer: Answer;
+correctAnswer: number;
 hasBeenAsked: boolean;
 }
