@@ -1,4 +1,5 @@
 
+using System.Text.Json.Serialization;
 using TenQuestApi.Models;
 
 namespace TenQuestApi.DTO
@@ -7,8 +8,9 @@ namespace TenQuestApi.DTO
 
     public class QuizDto
     {
-        public Category Catagory { get; set; } 
         public string Title { get; set; } = string.Empty;
+        [JsonPropertyName("category")]
+        public int Category { get; set; }
         public List<QuestionDto> Questions { get; set; } = new();
 
 

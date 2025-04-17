@@ -43,7 +43,7 @@ public class QuizController : ControllerBase
 
         var quiz = new Quiz()
         {
-            Catagory = quizDto.Catagory,
+            Catagory = (Category)quizDto.Category,
             Title = quizDto.Title,
             Questions = [.. quizDto.Questions.Select(q => new Questions
             {
