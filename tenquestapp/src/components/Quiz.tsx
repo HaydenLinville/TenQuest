@@ -2,7 +2,7 @@ import Cards from "./Cards";
 import { Questions } from "./Questions";
 
 //import React from "react";
-export let catagory: string[] = [
+export let category: string[] = [
   "Pop Culture",
   "History",
   "Science",
@@ -29,7 +29,7 @@ function Quizzes({ quizzes }: QuizzesProps) {
   return (
     <div>
       {quizzes.map((quiz) => (
-        <Cards title={quiz.title} description={catagory[quiz.catagory]} />
+        <Cards title={quiz.title} description={category[quiz.catagory]} />
       ))}
     </div>
   );

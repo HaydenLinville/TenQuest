@@ -2,14 +2,14 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import { catagory } from "./Quiz";
+import { category } from "./Quiz";
 import { useState } from "react";
 import { Typography, FormLabel, Button } from "@mui/material";
 
 function Form() {
   const [quiz, setQuiz] = useState({
     title: "",
-    category: 0,
+    sCategory: 0,
     questions: Array.from({ length: 10 }, () => ({
       text: "",
       answers: ["", "", "", ""],
@@ -67,13 +67,14 @@ function Form() {
         id="catagory-select"
         select
         label="Catagory"
-        value={quiz.category}
-        onChange={(e) =>
-          setQuiz({ ...quiz, category: parseInt(e.target.value) })
-        }
+        //value={quiz.category}
+        //onChange={(e) => setQuiz({ ...quiz, sCategory: e.target.value })}
+        onChange={(e) => {
+          setQuiz({ ...quiz, sCategory: parseInt(e.target.value) });
+        }}
         helperText="Please select your category"
       >
-        {catagory.map((option, index) => (
+        {category.map((option, index) => (
           <MenuItem key={index} value={index}>
             {option}
           </MenuItem>
