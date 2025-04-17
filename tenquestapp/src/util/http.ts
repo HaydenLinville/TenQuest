@@ -7,3 +7,19 @@ export async function get(url: string) {
   return data;
 }
 
+export async function post(url: string, data: object) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+  try {
+    const response = await fetch(url, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`Failed to POST to ${url} (status: ${response.status})`);
+    }
+  } catch (error) {
+    console.error("from submit error", error);
+  }
+}

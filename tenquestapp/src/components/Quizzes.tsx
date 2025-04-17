@@ -1,8 +1,8 @@
-import Cards from "./Cards";
+import SelectActionCard from "./Cards";
 import { Questions } from "./Questions";
 
 //import React from "react";
-export let category: string[] = [
+export let categoryL: string[] = [
   "Pop Culture",
   "History",
   "Science",
@@ -29,7 +29,7 @@ function Quizzes({ quizzes }: QuizzesProps) {
   return (
     <div>
       {quizzes.map((quiz) => (
-        <Cards title={quiz.title} description={category[quiz.catagory]} />
+        <SelectActionCard key={quiz.id} title={quiz.title} description={categoryL[quiz.catagory]} />
       ))}
     </div>
   );
