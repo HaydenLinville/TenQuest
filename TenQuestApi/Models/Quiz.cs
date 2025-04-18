@@ -5,8 +5,8 @@ namespace TenQuestApi.Models
     {
         public int Id { get; set; }
         public Category Catagory { get; set; }
-        public string? Title { get; set; }
-        public List<Questions>? Questions { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public List<Questions> Questions { get; set; } = new();
 
     }
 }

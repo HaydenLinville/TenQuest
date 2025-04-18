@@ -23,3 +23,17 @@ export async function post(url: string, data: object) {
     console.error("from submit error", error);
   }
 }
+
+export async function deleteData<T>(url: string, id: number) {
+  try {
+    const response = await fetch(url + id, { method: "DELETE" });
+    if (!response.ok) {
+      throw new Error(`Failed to delete: (status: ${response.status})`);
+    }
+    const data = await response.json();
+    return data as T;
+  } catch (error) {
+    console.error(`Error sending delete request`, error);
+    return null;
+  }
+}

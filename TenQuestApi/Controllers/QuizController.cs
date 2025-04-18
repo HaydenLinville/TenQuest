@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TenQuestApi.Data;
 using TenQuestApi.DTO;
 using TenQuestApi.Models;
@@ -17,11 +18,11 @@ public class QuizController : ControllerBase
     }
 
     [HttpGet("GetQuizzes")]
-    //IActionResult
-    public IEnumerable<Quiz> GetQuizzes()
+    public async Task<ActionResult<IEnumerable<Quiz>>> GetQuizzes()
     {
-        IEnumerable<Quiz> quizzes = _context.Quizzes.ToList<Quiz>();
-        return quizzes;
+        return await _context.Quizzes.ToListAsync();
+        // IEnumerable<Quiz> quizzes = _context.Quizzes.ToList<Quiz>();
+        // return quizzes;
 
     }
 
@@ -65,6 +66,37 @@ public class QuizController : ControllerBase
         }
         throw new Exception("Failed to add Quiz");
     }
+    //FindAsync(id);
+    // _context.Quizzes.Remove(quiz);
+    // await _context.SaveChangesAsync();
+
+    // return quiz;
+    [HttpDelete("DeleteQuiz/{id}")]
+    public async Task<ActionResult<Quiz>> DeleteQuiz(int id)
+    {
+        var quiz = await _context.Quizzes.Include(q => q.Questions).ThenInclude(q => q.Answers).FirstOrDefaultAsync(q => q.Id == id);
+        if (quiz == null)
+        {
+            return NotFound();
+        }
+        // Delete all answers first
+        foreach (var question in quiz.Questions)
+        {
+            _context.Answers.RemoveRange(question.Answers);
+        }
+
+        // Then delete all questions
+        _context.Questions.RemoveRange(quiz.Questions);
+
+        // Then delete the quiz
+        _context.Quizzes.Remove(quiz);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+
+    }
+
 }
 
 //public int Id { get; set; }

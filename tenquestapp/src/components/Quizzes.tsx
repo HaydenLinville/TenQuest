@@ -29,7 +29,7 @@ function Quizzes({ quizzes }: QuizzesProps) {
   return (
     <div>
       {quizzes.map((quiz) => (
-        <SelectActionCard key={quiz.id} title={quiz.title} description={categoryL[quiz.catagory]} />
+        <SelectActionCard key={quiz.id} id={quiz.id} title={quiz.title} description={categoryL[quiz.catagory]} />
       ))}
     </div>
   );
