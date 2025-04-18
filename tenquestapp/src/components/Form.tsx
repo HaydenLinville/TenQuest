@@ -3,44 +3,60 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { categoryL } from "./Quizzes";
-import { useState } from "react";
 import { Typography, FormLabel, Button } from "@mui/material";
-import { post } from "../util/http";
+import { Quiz } from "./Quizzes";
 
-function Form() {
-  const [quiz, setQuiz] = useState({
-    title: "",
-    category: 0,
-    questions: Array.from({ length: 10 }, () => ({
-      text: "",
-      answers: ["", "", "", ""],
-      correctAnswerIndex: 0,
-    })),
-  });
+type FormProp = {
+  quiz: Quiz;
+  handleSubmit: () => void;
+  handleChangeAnswer: (qIndex: number, aIndex: number, value: string) => void;
+  handleChangeQuestion: (qIndex: number, value: string) => void;
+  handleOnChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: "title" | "category"
+  ) => void;
+};
 
-  const handleChangeQuestion = (qIndex: number, value: string) => {
-    const updatedQuestions = [...quiz.questions];
-    updatedQuestions[qIndex].text = value;
+function Form({
+  quiz,
+  handleSubmit,
+  handleChangeAnswer,
+  handleChangeQuestion,
+  handleOnChange,
+}: FormProp) {
+  // const [quiz, setQuiz] = useState({
+  //   title: "",
+  //   category: 0,
+  //   questions: Array.from({ length: 10 }, () => ({
+  //     text: "",
+  //     answers: ["", "", "", ""],
+  //     correctAnswerIndex: 0,
+  //   })),
+  // });
 
-    setQuiz({ ...quiz, questions: updatedQuestions });
-  };
+  // const handleChangeQuestion = (qIndex: number, value: string) => {
+  //   const updatedQuestions = [...quiz.questions];
+  //   updatedQuestions[qIndex].text = value;
 
-  const handleChangeAnswer = (
-    qIndex: number,
-    aIndex: number,
-    value: string
-  ) => {
-    const updatedAnswers = [...quiz.questions];
-    updatedAnswers[qIndex].answers[aIndex] = value;
+  //   setQuiz({ ...quiz, questions: updatedQuestions });
+  // };
 
-    setQuiz({ ...quiz, questions: updatedAnswers });
-  };
+  // const handleChangeAnswer = (
+  //   qIndex: number,
+  //   aIndex: number,
+  //   value: string
+  // ) => {
+  //   const updatedAnswers = [...quiz.questions];
+  //   updatedAnswers[qIndex].answers[aIndex] = value;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const url = "http://localhost:5114/Quiz/AddQuiz";
-    post(url, quiz);
-  };
+  //   setQuiz({ ...quiz, questions: updatedAnswers });
+  // };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const url = "http://localhost:5114/Quiz/AddQuiz";
+  //   post(url, quiz);
+  // };
 
   return (
     <Box
@@ -55,15 +71,14 @@ function Form() {
         id="outlined-required"
         label="Required"
         defaultValue="Quiz Title"
-        onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
+        onChange={(e) => handleOnChange(e, "title")}
       />
       <TextField
         id="catagory-select"
         select
+        value={quiz.category}
         label="Catagory"
-        onChange={(e) => {
-          setQuiz({ ...quiz, category: parseInt(e.target.value) });
-        }}
+        onChange={(e) => handleOnChange(e, "category")}
         helperText="Please select your category"
       >
         {categoryL.map((option, index) => (
@@ -99,7 +114,7 @@ function Form() {
 
             <FormLabel sx={{ fontWeight: 500, mt: 1 }}>Answers</FormLabel>
 
-            {q.answers.map((answer, aIndex) => (
+            {q.answers.map((a, aIndex) => (
               <TextField
                 key={aIndex}
                 fullWidth
@@ -108,7 +123,7 @@ function Form() {
                 label={`Answer ${aIndex + 1}${
                   aIndex === 0 ? " (Correct)" : ""
                 }`}
-                value={answer}
+                value={a.answer}
                 onChange={(e) =>
                   handleChangeAnswer(qIndex, aIndex, e.target.value)
                 }

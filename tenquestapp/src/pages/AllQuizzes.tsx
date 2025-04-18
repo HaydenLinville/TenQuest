@@ -5,9 +5,9 @@ import { get } from "../util/http";
 
 type RawQuizData = {
   id: number;
-  catagory: number;
+  category: number;
   title: string;
-  questions?: Questions[];
+  questions: Questions[];
 };
 
 function AllQuizzes() {
@@ -22,7 +22,7 @@ function AllQuizzes() {
       const quizzes: Quiz[] = data.map((rawData) => {
         return {
           id: rawData.id,
-          catagory: rawData.catagory,
+          category: rawData.category,
           title: rawData.title,
           questions: rawData.questions,
         };

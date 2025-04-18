@@ -30,8 +30,8 @@ export async function deleteData<T>(url: string, id: number) {
     if (!response.ok) {
       throw new Error(`Failed to delete: (status: ${response.status})`);
     }
-    const data = await response.json();
-    return data as T;
+    const text = await response.text();
+    return text ? (JSON.parse(text) as T) : null;
   } catch (error) {
     console.error(`Error sending delete request`, error);
     return null;

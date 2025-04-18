@@ -15,10 +15,10 @@ export let categoryL: string[] = [
 ];
 
 export type Quiz = {
-  id: number;
-  catagory: number;
+  id?: number;
+  category: number;
   title: string;
-  questions?: Questions[];
+  questions: Questions[];
 };
 
 type QuizzesProps = {
@@ -28,9 +28,16 @@ type QuizzesProps = {
 function Quizzes({ quizzes }: QuizzesProps) {
   return (
     <div>
-      {quizzes.map((quiz) => (
-        <SelectActionCard key={quiz.id} id={quiz.id} title={quiz.title} description={categoryL[quiz.catagory]} />
-      ))}
+      {quizzes.map((quiz) =>
+        quiz.id !== undefined ? (
+          <SelectActionCard
+            key={quiz.id}
+            id={quiz.id}
+            title={quiz.title}
+            description={categoryL[quiz.category]}
+          />
+        ) : null
+      )}
     </div>
   );
 }

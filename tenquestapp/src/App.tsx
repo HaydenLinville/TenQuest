@@ -11,7 +11,7 @@ function App() {
         <Link to="/">
           <button>Home</button>
         </Link>
-        <Link to="/quizcreate">
+        <Link to="/customquiz">
           <button>Create A Quiz</button>
         </Link>
         <Link to="/allquizzes">
@@ -22,7 +22,7 @@ function App() {
       <div className="p-4">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/quizcreate" element={<CreateQuiz />} />
+          <Route path="/customquiz" element={<CreateQuiz />} />
           <Route path="/allquizzes" element={<AllQuizzes />} />
         </Routes>
       </div>

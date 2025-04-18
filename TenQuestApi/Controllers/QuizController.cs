@@ -51,7 +51,7 @@ public class QuizController : ControllerBase
                 Text = q.Text,
                 Answers = [.. q.Answers.Select(a => new Answer
                 {
-                    Text = a
+                    Text = a.Answer
                 })],
                 CorrectAnswerIndex = q.CorrectAnswerIndex,
                 HasBeenAsked = false
