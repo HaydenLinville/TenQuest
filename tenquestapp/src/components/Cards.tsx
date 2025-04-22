@@ -4,26 +4,34 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import { CardActions, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteData } from "../util/http";
 import { Quiz } from "./Quizzes";
+import ButtonRoute from "./ButtonRoute";
 
 type SelectActionCardProp = {
   title: string;
   description: string;
   id: number;
+  quiz: Quiz;
+  handleDelete: (id: number) => {};
 };
 
-const handleDelete = async (id: number) => {
-  const deletedQuiz = await deleteData<Quiz>(
-    "http://localhost:5114/Quiz/DeleteQuiz/",
-    id
-  );
-  if (deletedQuiz) {
-    console.log("Deleted:", deletedQuiz.title);
-  }
-};
+// const handleDelete = async (id: number) => {
+//   const deletedQuiz = await deleteData<Quiz>(
+//     "http://localhost:5114/Quiz/DeleteQuiz/",
+//     id
+//   );
+//   if (deletedQuiz) {
+//     console.log("Deleted:", deletedQuiz.title);
+//   }
+// };
 
-function SelectActionCard({ title, description, id }: SelectActionCardProp) {
+function SelectActionCard({
+  title,
+  description,
+  id,
+  quiz,
+  handleDelete,
+}: SelectActionCardProp) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -52,6 +60,9 @@ function SelectActionCard({ title, description, id }: SelectActionCardProp) {
         >
           <DeleteIcon />
         </IconButton>
+        <ButtonRoute to={"/customquiz"} role="button" data={quiz}>
+          Edit
+        </ButtonRoute>
       </CardActions>
     </Card>
   );

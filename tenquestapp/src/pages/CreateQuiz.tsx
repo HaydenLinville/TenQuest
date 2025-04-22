@@ -3,19 +3,24 @@ import Form from "../components/Form";
 import { Quiz } from "../components/Quizzes";
 import { post } from "../util/http";
 
-function CustomQuiz() {
-  const [quiz, setQuiz] = useState<Quiz>({
-    id: 0,
-    title: "",
-    category: 0,
-    questions: Array.from({ length: 10 }, () => ({
-      id: 0,
-      text: "",
-      answers: [{ answer: "" }, { answer: "" }, { answer: "" }, { answer: "" }],
-      correctAnswerIndex: 0,
-      hasBeenAsked: false,
-    })),
-  });
+type CustomQuizProps={
+  editQuiz: Quiz
+}
+
+function CustomQuiz({editQuiz} :CustomQuizProps) {
+  // const [quiz, setQuiz] = useState<Quiz>({
+  //   id: 0,
+  //   title: "",
+  //   category: 0,
+  //   questions: Array.from({ length: 10 }, () => ({
+  //     id: 0,
+  //     text: "",
+  //     answers: [{ answer: "" }, { answer: "" }, { answer: "" }, { answer: "" }],
+  //     correctAnswerIndex: 0,
+  //     hasBeenAsked: false,
+  //   })),
+  // });
+  const [quiz, setQuiz] =useState<Quiz>(editQuiz);
 
   const handleOnChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -42,8 +47,8 @@ function CustomQuiz() {
     setQuiz({ ...quiz, questions: updatedQuestions });
   };
 
-  const handleSubmit = async () => {
-    //e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const url = "http://localhost:5114/Quiz/AddQuiz";
     await post(url, quiz);
   };

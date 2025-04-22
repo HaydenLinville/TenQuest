@@ -23,14 +23,17 @@ export type Quiz = {
 
 type QuizzesProps = {
   quizzes: Quiz[];
+  handleDelete: (id: number)=>{}
 };
 
-function Quizzes({ quizzes }: QuizzesProps) {
+function Quizzes({ quizzes, handleDelete }: QuizzesProps) {
   return (
     <div>
       {quizzes.map((quiz) =>
         quiz.id !== undefined ? (
           <SelectActionCard
+           handleDelete={handleDelete}
+            quiz = {quiz}
             key={quiz.id}
             id={quiz.id}
             title={quiz.title}

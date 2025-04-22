@@ -8,7 +8,7 @@ import { Quiz } from "./Quizzes";
 
 type FormProp = {
   quiz: Quiz;
-  handleSubmit: () => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   handleChangeAnswer: (qIndex: number, aIndex: number, value: string) => void;
   handleChangeQuestion: (qIndex: number, value: string) => void;
   handleOnChange: (
@@ -24,53 +24,21 @@ function Form({
   handleChangeQuestion,
   handleOnChange,
 }: FormProp) {
-  // const [quiz, setQuiz] = useState({
-  //   title: "",
-  //   category: 0,
-  //   questions: Array.from({ length: 10 }, () => ({
-  //     text: "",
-  //     answers: ["", "", "", ""],
-  //     correctAnswerIndex: 0,
-  //   })),
-  // });
-
-  // const handleChangeQuestion = (qIndex: number, value: string) => {
-  //   const updatedQuestions = [...quiz.questions];
-  //   updatedQuestions[qIndex].text = value;
-
-  //   setQuiz({ ...quiz, questions: updatedQuestions });
-  // };
-
-  // const handleChangeAnswer = (
-  //   qIndex: number,
-  //   aIndex: number,
-  //   value: string
-  // ) => {
-  //   const updatedAnswers = [...quiz.questions];
-  //   updatedAnswers[qIndex].answers[aIndex] = value;
-
-  //   setQuiz({ ...quiz, questions: updatedAnswers });
-  // };
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const url = "http://localhost:5114/Quiz/AddQuiz";
-  //   post(url, quiz);
-  // };
-
   return (
     <Box
       component="form"
       sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit}
+      onSubmit={(e) => {
+        handleSubmit(e);
+      }}
     >
       <TextField
         required
         id="outlined-required"
         label="Required"
-        defaultValue="Quiz Title"
+        placeholder={quiz.title}
         onChange={(e) => handleOnChange(e, "title")}
       />
       <TextField

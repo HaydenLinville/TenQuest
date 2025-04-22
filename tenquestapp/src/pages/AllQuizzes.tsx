@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Questions } from "../components/Questions";
 import Quizzes, { Quiz } from "../components/Quizzes";
-import { get } from "../util/http";
+import { deleteData, get } from "../util/http";
 
 type RawQuizData = {
   id: number;
@@ -34,10 +34,27 @@ function AllQuizzes() {
     fetchQuizzes();
   }, []);
 
+  const handleDelete = async (id: number) => {
+    const deletedQuiz = await deleteData<Quiz>(
+      "http://localhost:5114/Quiz/DeleteQuiz/",
+      id
+    );
+    if (deletedQuiz) {
+      console.log("Deleted:", deletedQuiz.title);
+      setFetchedQuizzes((fetchedQuizzes) => {
+        if (fetchedQuizzes!) return fetchedQuizzes.filter((item) => item.id !== id);
+      });
+    }
+  };
+  //trying to reload fetched Quizzes onces deleted
+
   let content: ReactNode;
   if (fetchedQuizzes) {
-    content = <Quizzes quizzes={fetchedQuizzes}></Quizzes>;
+    content = (
+      <Quizzes handleDelete={handleDelete} quizzes={fetchedQuizzes}></Quizzes>
+    );
   }
+
   return <div>{content}</div>;
 }
 
