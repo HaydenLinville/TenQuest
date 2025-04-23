@@ -7,6 +7,9 @@ type CustomQuizProps={
   editQuiz: Quiz
 }
 
+
+
+
 function CustomQuiz({editQuiz} :CustomQuizProps) {
   // const [quiz, setQuiz] = useState<Quiz>({
   //   id: 0,
