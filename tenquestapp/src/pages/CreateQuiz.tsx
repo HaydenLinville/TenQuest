@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Form from "../components/Form";
-import { Quiz } from "../components/Quizzes";
+import { Quiz } from "../features/quizzes/quizSlice";
 import { post } from "../util/http";
 
 type CustomQuizProps={

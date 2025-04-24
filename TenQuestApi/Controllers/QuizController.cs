@@ -1,8 +1,11 @@
+using Azure;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TenQuestApi.Data;
 using TenQuestApi.DTO;
 using TenQuestApi.Models;
+
 
 namespace TenQuestApi.Controllers;
 
@@ -66,6 +69,32 @@ public class QuizController : ControllerBase
         }
         throw new Exception("Failed to add Quiz");
     }
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> PatchQuiz(int id, [FromBody] JsonPatchDocument<Quiz> patchDoc)
+    {
+        if (patchDoc == null)
+        {
+            return BadRequest();
+        }
+        var quizEntity = await _context.Quizzes.FindAsync(id);
+
+        if (quizEntity == null)
+        {
+            return NotFound();
+        }
+
+        //var quizToPatch =
+
+        patchDoc.ApplyTo(quizEntity, ModelState);
+        if (!TryValidateModel(quizEntity))
+        {
+            return BadRequest(ModelState);
+        }
+        await _context.SaveChangesAsync();
+
+        return Ok(quizEntity);
+    }
+
     //FindAsync(id);
     // _context.Quizzes.Remove(quiz);
     // await _context.SaveChangesAsync();
@@ -98,6 +127,8 @@ public class QuizController : ControllerBase
     }
 
 }
+
+
 
 //public int Id { get; set; }
 // public Category Catagory { get; set; }

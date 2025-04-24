@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import { CardActions, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Quiz } from "./Quizzes";
+import { Quiz } from "../features/quizzes/quizSlice";
 import ButtonRoute from "./ButtonRoute";
 
 type SelectActionCardProp = {

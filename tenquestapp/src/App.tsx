@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import Home from "./pages/Home";
+//import Home from "./pages/Home";
 import CreateQuiz from "./pages/CreateQuiz";
 import AllQuizzes from "./pages/AllQuizzes";
 import Layout from "./components/Layout";
@@ -26,7 +26,7 @@ function App() {
 
         <Route path="quizzes">
           <Route index element={<CreateQuiz editQuiz={editQuiz} />} />
-          <Route path="edit/:postId" element={<EditQuizForm />} />
+          {/* <Route path="edit/:postId" element={<EditQuizForm />} /> */}
         </Route>
 
       </Route>

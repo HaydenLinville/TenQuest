@@ -1,3 +1,3 @@
-export type Answer = {
-    answer: string;
-}
+// export type Answer = {
+//     answer: string;
+// }

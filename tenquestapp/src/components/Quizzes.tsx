@@ -1,5 +1,5 @@
 import SelectActionCard from "./Cards";
-import { Questions } from "./Questions";
+import { Quiz } from "../features/quizzes/quizSlice";
 
 //import React from "react";
 export let categoryL: string[] = [
@@ -14,12 +14,12 @@ export let categoryL: string[] = [
   "Sports",
 ];
 
-export type Quiz = {
-  id?: number;
-  category: number;
-  title: string;
-  questions: Questions[];
-};
+// export type Quiz = {
+//   id?: number;
+//   category: number;
+//   title: string;
+//   questions: Questions[];
+// };
 
 type QuizzesProps = {
   quizzes: Quiz[];
