@@ -1,29 +1,75 @@
-import * as React from "react";
+import { FormEvent, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { categoryL } from "./Quizzes";
 import { Typography, FormLabel, Button } from "@mui/material";
-import { Quiz } from "../features/quizzes/quizSlice";
+import { Quiz } from "../api/quizSlice_Api";
+import { useCreateQuizMutation } from "../api/quizSlice_Api";
 
-type FormProp = {
-  quiz: Quiz;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  handleChangeAnswer: (qIndex: number, aIndex: number, value: string) => void;
-  handleChangeQuestion: (qIndex: number, value: string) => void;
-  handleOnChange: (
+function AddQuizForm() {
+  const [newQuiz, setNewQuiz] = useState<Quiz>({
+    id: 0,
+    title: "",
+    category: 0,
+    questions: [
+      {
+        id: 0,
+        text: "",
+        answers: [
+          {
+            answer: "",
+          },
+        ],
+        correctAnswerIndex: 0,
+        hasBeenAsked: false,
+      },
+    ],
+  });
+
+  const [AddQuiz] = useCreateQuizMutation();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    AddQuiz(newQuiz);
+  };
+
+  const handleOnChangeTC = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: "title" | "category"
-  ) => void;
-};
+  ) => {
+    switch (field) {
+      case "title":
+        const title = e.target.value;
+        setNewQuiz({ ...newQuiz, [field]: title });
+        break;
+      case "category":
+        const category = parseInt(e.target.value);
+        setNewQuiz({ ...newQuiz, [field]: category });
+        break;
+      default:
+        break;
+    }
+  };
 
-function Form({
-  quiz,
-  handleSubmit,
-  handleChangeAnswer,
-  handleChangeQuestion,
-  handleOnChange,
-}: FormProp) {
+  const handleOnChangeQuestion = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    qIndex: number
+  ) => {
+    const updatedQuestions = [...newQuiz.questions];
+    updatedQuestions[qIndex].text = e.target.value;
+    setNewQuiz({ ...newQuiz, questions: updatedQuestions });
+  };
+
+  const handleOnChangeAnswer = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    qIndex: number,
+    aIndex: number
+  ) => {
+    const updatedQuestions = [...newQuiz.questions];
+    updatedQuestions[qIndex].answers[aIndex].answer = e.target.value;
+    setNewQuiz({ ...newQuiz, questions: updatedQuestions });
+  };
+
   return (
     <Box
       component="form"
@@ -38,15 +84,15 @@ function Form({
         required
         id="outlined-required"
         label="Required"
-        placeholder={quiz.title}
-        onChange={(e) => handleOnChange(e, "title")}
+        placeholder={"Title"}
+        onChange={(e) => handleOnChangeTC(e, "title")}
       />
       <TextField
         id="catagory-select"
         select
-        value={quiz.category}
+        value={newQuiz.category}
         label="Catagory"
-        onChange={(e) => handleOnChange(e, "category")}
+        onChange={(e) => handleOnChangeTC(e, "category")}
         helperText="Please select your category"
       >
         {categoryL.map((option, index) => (
@@ -56,7 +102,7 @@ function Form({
         ))}
       </TextField>
       <div className="questions">
-        {quiz.questions.map((q, qIndex) => (
+        {newQuiz.questions.map((q, qIndex) => (
           <Box
             key={qIndex}
             sx={{
@@ -77,7 +123,7 @@ function Form({
               variant="outlined"
               required
               value={q.text}
-              onChange={(e) => handleChangeQuestion(qIndex, e.target.value)}
+              onChange={(e) => handleOnChangeQuestion(e, qIndex)}
             />
 
             <FormLabel sx={{ fontWeight: 500, mt: 1 }}>Answers</FormLabel>
@@ -92,9 +138,7 @@ function Form({
                   aIndex === 0 ? " (Correct)" : ""
                 }`}
                 value={a.answer}
-                onChange={(e) =>
-                  handleChangeAnswer(qIndex, aIndex, e.target.value)
-                }
+                onChange={(e) => handleOnChangeAnswer(e, qIndex, aIndex)}
               />
             ))}
           </Box>
@@ -107,4 +151,4 @@ function Form({
   );
 }
 
-export default Form;
+export default AddQuizForm;

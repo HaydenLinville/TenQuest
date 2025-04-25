@@ -1,5 +1,5 @@
-import SelectActionCard from "./Cards";
-import { Quiz } from "../features/quizzes/quizSlice";
+import SelectActionCard from "../../components/Cards";
+import { Quiz } from "../api/quizSlice_Api";
 
 //import React from "react";
 export let categoryL: string[] = [
@@ -23,7 +23,7 @@ export let categoryL: string[] = [
 
 type QuizzesProps = {
   quizzes: Quiz[];
-  handleDelete: (id: number)=>{}
+  handleDelete: (id: number) => {};
 };
 
 function Quizzes({ quizzes, handleDelete }: QuizzesProps) {
@@ -32,8 +32,8 @@ function Quizzes({ quizzes, handleDelete }: QuizzesProps) {
       {quizzes.map((quiz) =>
         quiz.id !== undefined ? (
           <SelectActionCard
-           handleDelete={handleDelete}
-            quiz = {quiz}
+            handleDelete={handleDelete}
+            quiz={quiz}
             key={quiz.id}
             id={quiz.id}
             title={quiz.title}

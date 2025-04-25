@@ -1,16 +1,13 @@
 import { useState } from "react";
-import Form from "../components/Form";
-import { Quiz } from "../features/quizzes/quizSlice";
+import Form from "../features/quizzes/Form";
+import { Quiz } from "../features/api/quizSlice_Api";
 import { post } from "../util/http";
 
-type CustomQuizProps={
-  editQuiz: Quiz
-}
+type CustomQuizProps = {
+  editQuiz: Quiz;
+};
 
-
-
-
-function CustomQuiz({editQuiz} :CustomQuizProps) {
+function CustomQuiz({ editQuiz }: CustomQuizProps) {
   // const [quiz, setQuiz] = useState<Quiz>({
   //   id: 0,
   //   title: "",
@@ -23,7 +20,7 @@ function CustomQuiz({editQuiz} :CustomQuizProps) {
   //     hasBeenAsked: false,
   //   })),
   // });
-  const [quiz, setQuiz] =useState<Quiz>(editQuiz);
+  const [quiz, setQuiz] = useState<Quiz>(editQuiz);
 
   const handleOnChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

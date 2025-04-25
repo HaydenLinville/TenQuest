@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from "react";
 //import { Questions } from "../components/Questions";
-import Quizzes from "../components/Quizzes";
+import Quizzes from "../features/quizzes/Quizzes";
 //import { deleteData, get } from "../util/http";
-import { useGetQuizzesQuery } from "../features/quizzes/quizSlice";
+import { useGetQuizzesQuery } from "../features/api/quizSlice_Api";
 
 // type RawQuizData = {
 //   id: number;
