@@ -23,7 +23,7 @@ export let categoryL: string[] = [
 
 type QuizzesProps = {
   quizzes: Quiz[];
-  handleDelete: (id: number) => {};
+  handleDelete: (id: string) => {};
 };
 
 function Quizzes({ quizzes, handleDelete }: QuizzesProps) {

@@ -9,30 +9,26 @@ import { useCreateQuizMutation } from "../api/quizSlice_Api";
 
 function AddQuizForm() {
   const [newQuiz, setNewQuiz] = useState<Quiz>({
-    id: 0,
-    title: "",
+    id: "",
+    title: "Title",
     category: 0,
-    questions: [
+    questions: Array.from({length: 10} , () => (
       {
-        id: 0,
+        id: "",
         text: "",
-        answers: [
-          {
-            answer: "",
-          },
-        ],
+        answers: Array.from ({length: 4}, () => ({answer: ""})),
         correctAnswerIndex: 0,
         hasBeenAsked: false,
-      },
-    ],
+      })),
   });
-
+//adds quiz using api slice 
   const [AddQuiz] = useCreateQuizMutation();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+   // e.preventDefault();
     AddQuiz(newQuiz);
   };
 
+//handles change for title and category 
   const handleOnChangeTC = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: "title" | "category"
@@ -50,7 +46,7 @@ function AddQuizForm() {
         break;
     }
   };
-
+//handles change for questions
   const handleOnChangeQuestion = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     qIndex: number
@@ -59,7 +55,7 @@ function AddQuizForm() {
     updatedQuestions[qIndex].text = e.target.value;
     setNewQuiz({ ...newQuiz, questions: updatedQuestions });
   };
-
+//handles change for answers
   const handleOnChangeAnswer = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     qIndex: number,
@@ -83,8 +79,7 @@ function AddQuizForm() {
       <TextField
         required
         id="outlined-required"
-        label="Required"
-        placeholder={"Title"}
+        value={newQuiz.title}
         onChange={(e) => handleOnChangeTC(e, "title")}
       />
       <TextField

@@ -10,20 +10,10 @@ import ButtonRoute from "./ButtonRoute";
 type SelectActionCardProp = {
   title: string;
   description: string;
-  id: number;
+  id: string;
   quiz: Quiz;
-  handleDelete: (id: number) => {};
+  handleDelete: (id: string) => {};
 };
-
-// const handleDelete = async (id: number) => {
-//   const deletedQuiz = await deleteData<Quiz>(
-//     "http://localhost:5114/Quiz/DeleteQuiz/",
-//     id
-//   );
-//   if (deletedQuiz) {
-//     console.log("Deleted:", deletedQuiz.title);
-//   }
-// };
 
 function SelectActionCard({
   title,
@@ -60,7 +50,7 @@ function SelectActionCard({
         >
           <DeleteIcon />
         </IconButton>
-        <ButtonRoute to={"/customquiz"} role="button" data={quiz}>
+        <ButtonRoute to={`quizzes/edit/${quiz.id}`} role="button" data={quiz}>
           Edit
         </ButtonRoute>
       </CardActions>

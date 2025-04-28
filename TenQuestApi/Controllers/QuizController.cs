@@ -23,10 +23,25 @@ public class QuizController : ControllerBase
     [HttpGet("GetQuizzes")]
     public async Task<ActionResult<IEnumerable<Quiz>>> GetQuizzes()
     {
+
         return await _context.Quizzes.ToListAsync();
         // IEnumerable<Quiz> quizzes = _context.Quizzes.ToList<Quiz>();
         // return quizzes;
 
+    }
+    [HttpGet("GetQuiz/{id}")]
+    public async Task<ActionResult<Quiz>> GetQuiz(int id)
+    {
+        var quiz = await _context.Quizzes.FindAsync(id);
+        if (quiz != null)
+        {
+            return quiz;
+
+        }
+        else
+        {
+            return NotFound(id);
+        }
     }
 
     [HttpPost("AddQuiz")]
@@ -70,7 +85,7 @@ public class QuizController : ControllerBase
         throw new Exception("Failed to add Quiz");
     }
     [HttpPatch("{id}")]
-    public async Task<IActionResult> PatchQuiz(int id, [FromBody] JsonPatchDocument<Quiz> patchDoc)
+    public async Task<IActionResult> PatchQuiz(string id, [FromBody] JsonPatchDocument<Quiz> patchDoc)
     {
         if (patchDoc == null)
         {

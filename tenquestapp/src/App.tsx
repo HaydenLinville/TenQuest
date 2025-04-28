@@ -4,20 +4,22 @@ import "./App.css";
 import CreateQuiz from "./pages/CreateQuiz";
 import AllQuizzes from "./pages/AllQuizzes";
 import Layout from "./components/Layout";
+import AddQuizForm from "./features/quizzes/AddQuizForm";
+import EditQuizForm from "./features/quizzes/EditQuizForm";
 
 function App() {
-  const editQuiz = {
-    id: 0,
-    title: "",
-    category: 0,
-    questions: Array.from({ length: 10 }, () => ({
-      id: 0,
-      text: "",
-      answers: [{ answer: "" }, { answer: "" }, { answer: "" }, { answer: "" }],
-      correctAnswerIndex: 0,
-      hasBeenAsked: false,
-    })),
-  };
+  // const editQuiz = {
+  //   id: 0,
+  //   title: "",
+  //   category: 0,
+  //   questions: Array.from({ length: 10 }, () => ({
+  //     id: 0,
+  //     text: "",
+  //     answers: [{ answer: "" }, { answer: "" }, { answer: "" }, { answer: "" }],
+  //     correctAnswerIndex: 0,
+  //     hasBeenAsked: false,
+  //   })),
+  // };
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -25,8 +27,8 @@ function App() {
         <Route index element={<AllQuizzes />} />
 
         <Route path="quizzes">
-          <Route index element={<CreateQuiz editQuiz={editQuiz} />} />
-          {/* <Route path="edit/:postId" element={<EditQuizForm />} /> */}
+          <Route index element={<AddQuizForm  />} />
+          <Route path="edit/:quizId" element={<EditQuizForm />} />
         </Route>
 
       </Route>
