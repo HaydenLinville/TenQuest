@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TenQuestApi.Data;
-using TenQuestApi.DTO;
 using TenQuestApi.Models;
+using TenQuestApi.Data;
+using TenQuestApi.Services;
 
 
 namespace TenQuestApi.Controllers;
@@ -30,9 +31,11 @@ public class QuizController : ControllerBase
 
     }
     [HttpGet("GetQuiz/{id}")]
-    public async Task<ActionResult<Quiz>> GetQuiz(int id)
+    public ActionResult<FullQuiz> GetQuiz(int id)
     {
-        var quiz = await _context.Quizzes.FindAsync(id);
+        var serv = CreateQuizService();
+        var quiz = serv.GetQuizById(id);
+        // var quiz = await _context.Quizzes.FindAsync(id);
         if (quiz != null)
         {
             return quiz;
@@ -45,7 +48,7 @@ public class QuizController : ControllerBase
     }
 
     [HttpPost("AddQuiz")]
-    public IActionResult AddQuiz(QuizDto quizDto)
+    public IActionResult AddQuiz(QuizDefault quizDto)
     {
 
         if (quizDto.Questions.Count != 10)
@@ -139,6 +142,10 @@ public class QuizController : ControllerBase
 
         return NoContent();
 
+    }
+    private QuizServices CreateQuizService(){
+        var service = new QuizServices();
+        return service;
     }
 
 }

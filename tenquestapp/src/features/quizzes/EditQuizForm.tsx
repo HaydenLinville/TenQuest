@@ -19,18 +19,18 @@ function EditQuizForm() {
   if (state != undefined) {
     quiz = state;
   }
-  //   const { quizId } = useParams();
+    // const { quizId } = useParams();
 
-  //   let id = "";
-  //   let quiz = {} as Quiz;
+    // let id = "";
+    // let quiz = {} as Quiz;
 
-  //   if (quizId != null) {
-  //     id = quizId;
-  //   }
-  //   const { data } = useGetQuizQuery(id);
-  //   if (data != undefined) {
-  //     quiz = data;
-  //   }
+    // if (quizId != null) {
+    //   id = quizId;
+    // }
+    // const { data } = useGetQuizQuery(id);
+    // if (data != undefined) {
+    //   quiz = data;
+    // }
 
   const [editQuiz, setEditQuiz] = useState<Quiz>(quiz);
 

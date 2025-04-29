@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TenQuestApi.Models
+namespace TenQuestApi.Data
 {
     public class Answer 
     {

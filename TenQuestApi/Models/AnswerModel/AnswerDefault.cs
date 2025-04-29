@@ -1,8 +1,8 @@
-namespace TenQuestApi.DTO
+namespace TenQuestApi.Models
 {
 
 
-    public class AnswerDto
+    public class AnswerDefault
     {
         public string Answer { get; set; } = string.Empty;
     }

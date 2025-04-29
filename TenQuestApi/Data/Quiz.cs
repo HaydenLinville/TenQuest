@@ -1,4 +1,4 @@
-namespace TenQuestApi.Models
+namespace TenQuestApi.Data
 {
     public enum Category { PopCulture, History, Science, Literature, Geography, Music, VideoGames, FoodDrink, Sports }
     public class Quiz
