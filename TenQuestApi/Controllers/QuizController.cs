@@ -31,14 +31,14 @@ public class QuizController : ControllerBase
 
     }
     [HttpGet("GetQuiz/{id}")]
-    public ActionResult<FullQuiz> GetQuiz(int id)
+    public async Task<ActionResult> GetQuiz(int id)
     {
         var serv = CreateQuizService();
-        var quiz = serv.GetQuizById(id);
+        var quiz = await serv.GetQuizAsync(id);
         // var quiz = await _context.Quizzes.FindAsync(id);
         if (quiz != null)
         {
-            return quiz;
+            return Ok(quiz);
 
         }
         else
@@ -87,30 +87,17 @@ public class QuizController : ControllerBase
         }
         throw new Exception("Failed to add Quiz");
     }
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> PatchQuiz(string id, [FromBody] JsonPatchDocument<Quiz> patchDoc)
+    [HttpPatch("UpdateQuiz")]
+    public async Task<IActionResult> UpdateQuiz([FromBody] UpdateQuiz updatedQuiz)
     {
-        if (patchDoc == null)
+        if (updatedQuiz == null) return BadRequest("Quiz is null.");
+        var serv = CreateQuizService();
+        var result = await serv.UpdateQuizAsync(updatedQuiz);
+        if (!result.Success)
         {
-            return BadRequest();
+            return NotFound(result.Message);
         }
-        var quizEntity = await _context.Quizzes.FindAsync(id);
-
-        if (quizEntity == null)
-        {
-            return NotFound();
-        }
-
-        //var quizToPatch =
-
-        patchDoc.ApplyTo(quizEntity, ModelState);
-        if (!TryValidateModel(quizEntity))
-        {
-            return BadRequest(ModelState);
-        }
-        await _context.SaveChangesAsync();
-
-        return Ok(quizEntity);
+        return NoContent();
     }
 
     //FindAsync(id);

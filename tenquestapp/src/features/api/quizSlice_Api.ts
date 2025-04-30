@@ -16,6 +16,7 @@ export interface Questions {
   hasBeenAsked: boolean;
 }
 export interface Answer {
+  id: string;
   answer: string;
 }
 

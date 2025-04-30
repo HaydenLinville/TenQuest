@@ -16,6 +16,7 @@ function EditQuizForm() {
   console.log(quizId)
   const { data: quiz, isLoading } = useGetQuizQuery(quizId ?? "");
   const [editQuiz, setEditQuiz] = useState<Quiz |null>(null);
+  const [PatchQuiz] = useUpdateQuizMutation();
 
  
 
@@ -24,9 +25,8 @@ function EditQuizForm() {
   }, [quiz])
 
   //adds quiz using api slice
-  const [PatchQuiz] = useUpdateQuizMutation();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    // e.preventDefault();
+     e.preventDefault();
     if (editQuiz != null) PatchQuiz(editQuiz);
   };
 
@@ -57,10 +57,11 @@ function EditQuizForm() {
   ) => {
     if(!editQuiz)return ;
     const updatedQuestions = [...editQuiz.questions];
-    updatedQuestions[qIndex].text = e.target.value;
+    updatedQuestions[qIndex] = {...updatedQuestions[qIndex], text: e.target.value}
+    //updatedQuestions[qIndex].text = e.target.value;
     setEditQuiz({ ...editQuiz, questions: updatedQuestions });
   };
-  
+
   //handles change for answers
   const handleOnChangeAnswer = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -69,7 +70,13 @@ function EditQuizForm() {
   ) => {
     if(!editQuiz) return;
     const updatedQuestions = [...editQuiz.questions];
-    updatedQuestions[qIndex].answers[aIndex].answer = e.target.value;
+
+    const updatedAnswers = [...updatedQuestions[qIndex].answers];
+
+    updatedAnswers[aIndex] = {...updatedAnswers[aIndex], answer: e.target.value};
+
+    updatedQuestions[qIndex] = {...updatedQuestions[qIndex], answers: updatedAnswers};
+    //updatedQuestions[qIndex].answers[aIndex].answer = e.target.value;
     setEditQuiz({ ...editQuiz, questions: updatedQuestions });
   };
 
