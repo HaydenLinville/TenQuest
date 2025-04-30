@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -8,37 +8,26 @@ import { Typography, FormLabel, Button } from "@mui/material";
 import {
   Quiz,
   useGetQuizQuery,
-  useGetQuizzesQuery,
   useUpdateQuizMutation,
 } from "../api/quizSlice_Api";
-import { useCreateQuizMutation } from "../api/quizSlice_Api";
 
 function EditQuizForm() {
-  const { state } = useLocation();
-  let quiz = {} as Quiz;
-  if (state != undefined) {
-    quiz = state;
-  }
-    // const { quizId } = useParams();
+  const { quizId } = useParams<{ quizId: string }>();
+  console.log(quizId)
+  const { data: quiz, isLoading } = useGetQuizQuery(quizId ?? "");
+  const [editQuiz, setEditQuiz] = useState<Quiz |null>(null);
 
-    // let id = "";
-    // let quiz = {} as Quiz;
+ 
 
-    // if (quizId != null) {
-    //   id = quizId;
-    // }
-    // const { data } = useGetQuizQuery(id);
-    // if (data != undefined) {
-    //   quiz = data;
-    // }
-
-  const [editQuiz, setEditQuiz] = useState<Quiz>(quiz);
+  useEffect(()=>{
+    if(quiz) setEditQuiz(quiz);
+  }, [quiz])
 
   //adds quiz using api slice
   const [PatchQuiz] = useUpdateQuizMutation();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     // e.preventDefault();
-    PatchQuiz(editQuiz);
+    if (editQuiz != null) PatchQuiz(editQuiz);
   };
 
   //handles change for title and category
@@ -48,12 +37,14 @@ function EditQuizForm() {
   ) => {
     switch (field) {
       case "title":
+        if(!editQuiz)return ;
         const title = e.target.value;
-        setEditQuiz({ ...editQuiz, [field]: title });
+        setEditQuiz({ ...editQuiz, title });
         break;
       case "category":
+        if(!editQuiz)return ;
         const category = parseInt(e.target.value);
-        setEditQuiz({ ...editQuiz, [field]: category });
+        setEditQuiz({ ...editQuiz, category });
         break;
       default:
         break;
@@ -64,20 +55,26 @@ function EditQuizForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     qIndex: number
   ) => {
+    if(!editQuiz)return ;
     const updatedQuestions = [...editQuiz.questions];
     updatedQuestions[qIndex].text = e.target.value;
     setEditQuiz({ ...editQuiz, questions: updatedQuestions });
   };
+  
   //handles change for answers
   const handleOnChangeAnswer = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     qIndex: number,
     aIndex: number
   ) => {
+    if(!editQuiz) return;
     const updatedQuestions = [...editQuiz.questions];
     updatedQuestions[qIndex].answers[aIndex].answer = e.target.value;
     setEditQuiz({ ...editQuiz, questions: updatedQuestions });
   };
+
+  if (isLoading) return <p>Loading..</p>;
+  if (!editQuiz) return <p>No Quiz found</p>;
 
   return (
     <Box
@@ -160,3 +157,9 @@ function EditQuizForm() {
 }
 
 export default EditQuizForm;
+
+// const { state } = useLocation();
+// let quiz = {} as Quiz;
+// if (state != undefined) {
+//   quiz = state;
+// }

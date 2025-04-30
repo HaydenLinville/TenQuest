@@ -143,8 +143,9 @@ public class QuizController : ControllerBase
         return NoContent();
 
     }
-    private QuizServices CreateQuizService(){
-        var service = new QuizServices();
+    private QuizServices CreateQuizService()
+    {
+        var service = new QuizServices(_context);
         return service;
     }
 

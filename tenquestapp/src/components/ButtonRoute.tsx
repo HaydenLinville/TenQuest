@@ -13,11 +13,11 @@ const ButtonRoute = ({
   to,
   data
 }: PropsWithChildren<ButtonProps>) => {
-
+  
   const nav = useNavigate();
 
   const toComponentWData = ()=>{
-    nav(to, )
+    nav(to, data)
   };
   return (
     <Link to = {to} state={data}>

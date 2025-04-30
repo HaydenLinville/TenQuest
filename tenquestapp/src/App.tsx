@@ -6,20 +6,21 @@ import AllQuizzes from "./pages/AllQuizzes";
 import Layout from "./components/Layout";
 import AddQuizForm from "./features/quizzes/AddQuizForm";
 import EditQuizForm from "./features/quizzes/EditQuizForm";
+import PlayQuiz from "./features/play/PlayQuiz";
+import { ReactNode, useState } from "react";
+import { Quiz } from "./features/api/quizSlice_Api";
 
 function App() {
-  // const editQuiz = {
-  //   id: 0,
-  //   title: "",
-  //   category: 0,
-  //   questions: Array.from({ length: 10 }, () => ({
-  //     id: 0,
-  //     text: "",
-  //     answers: [{ answer: "" }, { answer: "" }, { answer: "" }, { answer: "" }],
-  //     correctAnswerIndex: 0,
-  //     hasBeenAsked: false,
-  //   })),
-  // };
+  const [quiz, setQuiz] = useState<Quiz>()
+  
+  function handleSetQuiz(hSQuiz: Quiz){
+    setQuiz(hSQuiz);
+  }
+  let playQuiz: ReactNode;
+  if(quiz != undefined)
+  {
+    playQuiz = <PlayQuiz quiz={quiz} />
+  }
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -29,6 +30,7 @@ function App() {
         <Route path="quizzes">
           <Route index element={<AddQuizForm  />} />
           <Route path="edit/:quizId" element={<EditQuizForm />} />
+          <Route path="play/:quizId" element={playQuiz} />
         </Route>
 
       </Route>

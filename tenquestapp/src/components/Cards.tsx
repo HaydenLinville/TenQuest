@@ -6,6 +6,7 @@ import { CardActions, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Quiz } from "../features/api/quizSlice_Api";
 import ButtonRoute from "./ButtonRoute";
+import { useNavigate } from "react-router-dom";
 
 type SelectActionCardProp = {
   title: string;
@@ -15,6 +16,11 @@ type SelectActionCardProp = {
   handleDelete: (id: string) => {};
 };
 
+
+function handleClick() {
+  console.log("works");
+}
+
 function SelectActionCard({
   title,
   description,
@@ -22,9 +28,13 @@ function SelectActionCard({
   quiz,
   handleDelete,
 }: SelectActionCardProp) {
+
+const nav = useNavigate();
+
+
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleClick}>
         {/* <CardMedia
           component="img"
           height="140"
