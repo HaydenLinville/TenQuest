@@ -1,17 +1,17 @@
 import Card from "@mui/material/Card";
 import { CardActions, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Quiz } from "../features/api/quizSlice_Api";
 import ButtonRoute from "./ButtonRoute";
 import { useNavigate } from "react-router-dom";
 import CardC from "./CardC";
+import { Quiz } from "../features/quizzes/ModelQuiz";
 
 type CardQuizProp = {
   title: string;
   description: string;
-  id: string;
+  id: number;
   quiz: Quiz;
-  handleDelete: (id: string) => {};
+  handleDelete: (id: number) => {};
 };
 
 function CardQuiz({

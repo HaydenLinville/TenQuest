@@ -49,44 +49,23 @@ public class QuizController : ControllerBase
 
 
     [HttpPost("AddQuiz")]
-    public IActionResult AddQuiz(QuizDefault quizDto)
+    public IActionResult AddQuiz(QuizDefault quizDefault)
     {
 
-        if (quizDto.Questions.Count != 10)
+        if (quizDefault.Questions.Count != 10)
             return BadRequest("A quiz must contain exactly 10 questions.");
 
-        foreach (var question in quizDto.Questions)
+        foreach (var question in quizDefault.Questions)
         {
             if (question.Answers.Count != 4)
                 return BadRequest("Each question must have exactly 4 answers.");
             if (question.CorrectAnswerIndex < 0 || question.CorrectAnswerIndex > 3)
                 return BadRequest("CorrectAnswerIndex must be between 0 and 3.");
         }
+        var serv = CreateQuizService();
+        var changesSaved = serv.CreateQuiz(quizDefault);
 
-
-        var quiz = new Quiz()
-        {
-
-            Catagory = (Category)quizDto.Category,
-            Title = quizDto.Title,
-            Questions = [.. quizDto.Questions.Select(q =>
-            {
-                var answers = q.Answers.Select(a=> new Answer{
-                    Id = a.Id,
-                    Text = a.Answer,
-                }).ToList();
-                return new Questions {
-
-                Text = q.Text,
-                Answers = answers,
-                CorrectAnswerIndex = answers.First().Id,
-                HasBeenAsked = false
-                };
-            })]
-        };
-
-        _context.Add(quiz);
-        if (_context.SaveChanges() > 0)
+        if (changesSaved)
         {
             return Ok();
 

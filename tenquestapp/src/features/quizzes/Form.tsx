@@ -4,7 +4,8 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { categoryL } from "./Quizzes";
 import { Typography, FormLabel, Button } from "@mui/material";
-import { Quiz } from "../api/quizSlice_Api";
+import { Quiz } from "./ModelQuiz";
+
 
 type FormProp = {
   quiz: Quiz;

@@ -18,7 +18,7 @@ function AllQuizzes() {
 
   const [deleteQuiz] = useDeleteQuizMutation();
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: number) => {
     deleteQuiz(id);
   };
 

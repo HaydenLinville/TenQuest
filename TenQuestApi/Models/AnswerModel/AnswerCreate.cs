@@ -4,10 +4,11 @@ namespace TenQuestApi.Models
 {
 
 
-    public class AnswerDefault
+    public class AnswerCreate
     {
-        public int Id { get; set; }
-
+        // [JsonPropertyName("id")]
+        // public int Id { get; set; }
+        [JsonPropertyName("answer")]
         public string Answer { get; set; } = string.Empty;
     }
 }

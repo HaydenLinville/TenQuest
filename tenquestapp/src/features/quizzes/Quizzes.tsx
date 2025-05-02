@@ -1,6 +1,7 @@
 import CardQuiz from "../../components/CardQuiz";
 import SelectActionCard from "../../components/CardQuiz";
-import { Quiz } from "../api/quizSlice_Api";
+import { Quiz } from "./ModelQuiz";
+
 
 //import React from "react";
 export let categoryL: string[] = [
@@ -24,7 +25,7 @@ export let categoryL: string[] = [
 
 type QuizzesProps = {
   quizzes: Quiz[];
-  handleDelete: (id: string) => {};
+  handleDelete: (id: number) => {};
 };
 
 function Quizzes({ quizzes, handleDelete }: QuizzesProps) {

@@ -23,7 +23,7 @@ namespace TenQuestApi.Services
             if (enity == null) return null;
             var quiz = new FullQuiz
             {
-                id = enity.Id,
+                Id = enity.Id,
                 Title = enity.Title,
                 Category = (int)enity.Catagory,
                 Questions = enity.Questions.Select(q => new QuestionFull
@@ -41,7 +41,36 @@ namespace TenQuestApi.Services
             };
             return quiz;
         }
-    
+        public bool CreateQuiz(QuizDefault quizDefault)
+        {
+            var quiz = new Quiz()
+            {
+
+                Catagory = (Category)quizDefault.Category,
+                Title = quizDefault.Title,
+                Questions = [.. quizDefault.Questions.Select(q => {
+
+                var answers = q.Answers.Select(a=> new Answer{
+                    Text = a.Answer,
+                }).ToList();
+                var correctAnswerId = answers.First().Id;
+                return new Questions{
+
+                Text = q.Text,
+                Answers = answers,
+                CorrectAnswerIndex = correctAnswerId,
+                HasBeenAsked = false
+
+            };
+
+            })]
+            };
+            _context.Add(quiz);
+            return _context.SaveChanges() > 0;
+
+
+        }
+
 
         public async Task<(bool Success, string Message, Quiz UpdatedQuiz)> UpdateQuizAsync(UpdateQuiz updatedQuiz)
         {

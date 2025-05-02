@@ -6,10 +6,10 @@ import MenuItem from "@mui/material/MenuItem";
 import { categoryL } from "./Quizzes";
 import { Typography, FormLabel, Button } from "@mui/material";
 import {
-  Quiz,
   useGetQuizQuery,
   useUpdateQuizMutation,
 } from "../api/quizSlice_Api";
+import { Quiz } from "./ModelQuiz";
 
 function EditQuizForm() {
   const { quizId } = useParams<{ quizId: string }>();

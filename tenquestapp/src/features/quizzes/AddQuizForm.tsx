@@ -4,20 +4,16 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { categoryL } from "./Quizzes";
 import { Typography, FormLabel, Button } from "@mui/material";
-import { Quiz } from "../api/quizSlice_Api";
 import { useCreateQuizMutation } from "../api/quizSlice_Api";
+import { Quiz, QuizCreate } from "./ModelQuiz";
 
 function AddQuizForm() {
-  const [newQuiz, setNewQuiz] = useState<Quiz>({
-    id: "",
+  const [newQuiz, setNewQuiz] = useState<QuizCreate>({
     title: "Title",
     category: 0,
     questions: Array.from({ length: 10 }, () => ({
-      id: "",
       text: "",
-      answers: Array.from({ length: 4 }, () => ({ id: "", answer: "" })),
-      correctAnswerIndex: "",
-      hasBeenAsked: false,
+      answers: Array.from({ length: 4 }, () => ({ answer: "" })),
     })),
   });
   //adds quiz using api slice

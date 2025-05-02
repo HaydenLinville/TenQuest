@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Answer, Questions } from "../api/quizSlice_Api";
+import { Answer, Questions } from "../quizzes/ModelQuiz";
+
 
 interface PlayState {
   level: number;
@@ -18,18 +19,18 @@ const initialState: PlayState = {
   gameOn: false,
   questions: [
     {
-      id: "",
+      id: 0,
       text: "",
-      answers: Array.from({ length: 4 }, () => ({ id: "", answer: "" })),
+      answers: Array.from({ length: 4 }, () => ({ id: 0, answer: "" })),
       correctAnswerIndex: "",
       hasBeenAsked: false,
     },
   ],
   currentQuestion: 
     {
-      id: "",
+      id: 0,
       text: "",
-      answers: Array.from({ length: 4 }, () => ({ id: "", answer: "" })),
+      answers: Array.from({ length: 4 }, () => ({ id: 0, answer: "" })),
       correctAnswerIndex: "",
       hasBeenAsked: false,
     }

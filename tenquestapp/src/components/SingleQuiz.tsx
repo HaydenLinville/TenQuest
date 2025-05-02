@@ -1,9 +1,9 @@
 import Box  from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import { Quiz } from "../features/api/quizSlice_Api";
 import { categoryL } from "../features/quizzes/Quizzes";
 import CardC from "./CardC";
+import { Quiz } from "../features/quizzes/ModelQuiz";
 
 type SingleQuizProp = {
   quiz: Quiz;

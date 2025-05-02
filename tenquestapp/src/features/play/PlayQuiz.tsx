@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import SingleQuiz from "../../components/SingleQuiz";
-import { Quiz, useGetQuizQuery } from "../api/quizSlice_Api";
+import {  useGetQuizQuery } from "../api/quizSlice_Api";
 import { useParams } from "react-router-dom";
 
 export default function PlayQuiz() {

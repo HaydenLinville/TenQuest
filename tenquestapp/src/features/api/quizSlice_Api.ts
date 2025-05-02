@@ -1,24 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Quiz, QuizCreate } from "../quizzes/ModelQuiz";
 
 const BASELINE = "http://localhost:5114/Quiz";
-export interface Quiz {
-  id: string;
-  title: string;
-  category: number;
-  questions: Questions[];
-}
-
-export interface Questions {
-  id: string;
-  text: string;
-  answers: Answer[];
-  correctAnswerIndex: string;
-  hasBeenAsked: boolean;
-}
-export interface Answer {
-  id: string;
-  answer: string;
-}
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -33,9 +16,8 @@ export const apiSlice = createApi({
     }),
     getQuiz: builder.query<Quiz, string>({
       query: (id) => `/GetQuiz/${id}`,
-
     }),
-    createQuiz: builder.mutation<void, Quiz>({
+    createQuiz: builder.mutation<void, QuizCreate>({
       query: (quiz) => ({
         url: `/AddQuiz`,
         method: "POST",
@@ -51,7 +33,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Quizzes"],
     }),
-    deleteQuiz: builder.mutation<void, string>({
+    deleteQuiz: builder.mutation<void, number>({
       query: (id) => ({
         url: `/DeleteQuiz/${id}`,
         method: "DELETE",
