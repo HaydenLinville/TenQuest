@@ -15,6 +15,8 @@ function EditQuizForm() {
   const { quizId } = useParams<{ quizId: string }>();
   console.log(quizId)
   const { data: quiz, isLoading } = useGetQuizQuery(quizId ?? "");
+
+ 
   const [editQuiz, setEditQuiz] = useState<Quiz |null>(null);
   const [PatchQuiz] = useUpdateQuizMutation();
 
@@ -57,8 +59,9 @@ function EditQuizForm() {
   ) => {
     if(!editQuiz)return ;
     const updatedQuestions = [...editQuiz.questions];
+    
     updatedQuestions[qIndex] = {...updatedQuestions[qIndex], text: e.target.value}
-    //updatedQuestions[qIndex].text = e.target.value;
+    
     setEditQuiz({ ...editQuiz, questions: updatedQuestions });
   };
 
@@ -76,7 +79,7 @@ function EditQuizForm() {
     updatedAnswers[aIndex] = {...updatedAnswers[aIndex], answer: e.target.value};
 
     updatedQuestions[qIndex] = {...updatedQuestions[qIndex], answers: updatedAnswers};
-    //updatedQuestions[qIndex].answers[aIndex].answer = e.target.value;
+    
     setEditQuiz({ ...editQuiz, questions: updatedQuestions });
   };
 

@@ -1,7 +1,9 @@
-import Box from "@mui/material/Box";
+import Box  from "@mui/material/Box";
+import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import { Quiz } from "../features/api/quizSlice_Api";
 import { categoryL } from "../features/quizzes/Quizzes";
+import CardC from "./CardC";
 
 type SingleQuizProp = {
   quiz: Quiz;
@@ -23,9 +25,11 @@ export default function SingleQuiz({ quiz }: SingleQuizProp) {
               {questions.text}
             </Typography>
             {questions.answers.map((answers) => (
-              <Typography variant="h4" gutterBottom>
-                {answers.answer}
-              </Typography>
+              <Card>
+              <CardC title={answers.answer} description={""} handleClick={function (): void {
+                throw new Error("Function not implemented.");
+              } } ></CardC>
+              </Card>
             ))}
           </>
         ))}

@@ -1,4 +1,5 @@
-import SelectActionCard from "../../components/Cards";
+import CardQuiz from "../../components/CardQuiz";
+import SelectActionCard from "../../components/CardQuiz";
 import { Quiz } from "../api/quizSlice_Api";
 
 //import React from "react";
@@ -31,7 +32,7 @@ function Quizzes({ quizzes, handleDelete }: QuizzesProps) {
     <div>
       {quizzes.map((quiz) =>
         quiz.id !== undefined ? (
-          <SelectActionCard
+          <CardQuiz
             handleDelete={handleDelete}
             quiz={quiz}
             key={quiz.id}

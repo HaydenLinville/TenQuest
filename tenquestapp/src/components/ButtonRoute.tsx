@@ -4,28 +4,30 @@ import { Link, useNavigate } from "react-router-dom";
 type ButtonProps = {
   role: string;
   to: string;
-  data: {}
+  data: {};
 };
 
 const ButtonRoute = ({
   children,
   role,
   to,
-  data
+  data,
 }: PropsWithChildren<ButtonProps>) => {
-  
   const nav = useNavigate();
 
-  const toComponentWData = ()=>{
-    nav(to, data)
+  const toComponentWData = () => {
+    nav(to, data);
   };
   return (
-    <Link to = {to} state={data}>
-      <button onClick={toComponentWData} role={role}>
-        {children}
-      </button>
-    </Link>
+    <button onClick={toComponentWData} role={role}>
+      {children}
+    </button>
   );
 };
 
 export default ButtonRoute;
+
+{
+  /* <Link to = {to} state={data}>
+</Link> */
+}

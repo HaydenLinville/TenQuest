@@ -47,6 +47,7 @@ public class QuizController : ControllerBase
         }
     }
 
+
     [HttpPost("AddQuiz")]
     public IActionResult AddQuiz(QuizDefault quizDto)
     {
@@ -65,17 +66,22 @@ public class QuizController : ControllerBase
 
         var quiz = new Quiz()
         {
+
             Catagory = (Category)quizDto.Category,
             Title = quizDto.Title,
-            Questions = [.. quizDto.Questions.Select(q => new Questions
+            Questions = [.. quizDto.Questions.Select(q =>
             {
+                var answers = q.Answers.Select(a=> new Answer{
+                    Id = a.Id,
+                    Text = a.Answer,
+                }).ToList();
+                return new Questions {
+
                 Text = q.Text,
-                Answers = [.. q.Answers.Select(a => new Answer
-                {
-                    Text = a.Answer
-                })],
-                CorrectAnswerIndex = q.CorrectAnswerIndex,
+                Answers = answers,
+                CorrectAnswerIndex = answers.First().Id,
                 HasBeenAsked = false
+                };
             })]
         };
 
@@ -87,6 +93,8 @@ public class QuizController : ControllerBase
         }
         throw new Exception("Failed to add Quiz");
     }
+
+
     [HttpPatch("UpdateQuiz")]
     public async Task<IActionResult> UpdateQuiz([FromBody] UpdateQuiz updatedQuiz)
     {

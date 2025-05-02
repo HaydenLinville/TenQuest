@@ -12,7 +12,7 @@ export interface Questions {
   id: string;
   text: string;
   answers: Answer[];
-  correctAnswerIndex: number;
+  correctAnswerIndex: string;
   hasBeenAsked: boolean;
 }
 export interface Answer {

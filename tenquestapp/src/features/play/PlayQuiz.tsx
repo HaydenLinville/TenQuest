@@ -1,19 +1,18 @@
 import { ReactNode } from "react";
 import SingleQuiz from "../../components/SingleQuiz";
 import { Quiz, useGetQuizQuery } from "../api/quizSlice_Api";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-type PlayQuizProps = {
-    quiz: Quiz;
-};
+export default function PlayQuiz() {
+  const { quizId } = useParams<{ quizId: string }>();
 
-export default function PlayQuiz({quiz}: PlayQuizProps) {
-    useLocation
-
-  var { data } = useGetQuizQuery(quiz.id);
+  var { data: quiz, isLoading } = useGetQuizQuery(quizId ?? "");
   let content: ReactNode;
-  if (data != undefined) {
-    content = <SingleQuiz quiz={data}></SingleQuiz>;
+  if (isLoading) {
+    content = <p>loading</p>;
+  }
+  if (quiz != undefined) {
+    content = <SingleQuiz quiz={quiz}></SingleQuiz>;
   }
 
   return <>{content}</>;

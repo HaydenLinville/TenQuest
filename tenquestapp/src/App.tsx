@@ -11,16 +11,7 @@ import { ReactNode, useState } from "react";
 import { Quiz } from "./features/api/quizSlice_Api";
 
 function App() {
-  const [quiz, setQuiz] = useState<Quiz>()
   
-  function handleSetQuiz(hSQuiz: Quiz){
-    setQuiz(hSQuiz);
-  }
-  let playQuiz: ReactNode;
-  if(quiz != undefined)
-  {
-    playQuiz = <PlayQuiz quiz={quiz} />
-  }
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -30,12 +21,12 @@ function App() {
         <Route path="quizzes">
           <Route index element={<AddQuizForm  />} />
           <Route path="edit/:quizId" element={<EditQuizForm />} />
-          <Route path="play/:quizId" element={playQuiz} />
+          <Route path="play/:quizId" element={<PlayQuiz/>} />
         </Route>
 
       </Route>
     </Routes>
-
+    
     // <BrowserRouter>
     //   <nav className="p-4 bg-gray-100 flex gap-4">
     //     <Link to="/">

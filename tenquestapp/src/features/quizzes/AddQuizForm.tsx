@@ -12,23 +12,22 @@ function AddQuizForm() {
     id: "",
     title: "Title",
     category: 0,
-    questions: Array.from({length: 10} , () => (
-      {
-        id: "",
-        text: "",
-        answers: Array.from ({length: 4}, () => ({answer: ""})),
-        correctAnswerIndex: 0,
-        hasBeenAsked: false,
-      })),
+    questions: Array.from({ length: 10 }, () => ({
+      id: "",
+      text: "",
+      answers: Array.from({ length: 4 }, () => ({ id: "", answer: "" })),
+      correctAnswerIndex: "",
+      hasBeenAsked: false,
+    })),
   });
-//adds quiz using api slice 
+  //adds quiz using api slice
   const [AddQuiz] = useCreateQuizMutation();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-   // e.preventDefault();
+     e.preventDefault();
     AddQuiz(newQuiz);
   };
 
-//handles change for title and category 
+  //handles change for title and category
   const handleOnChangeTC = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: "title" | "category"
@@ -46,7 +45,7 @@ function AddQuizForm() {
         break;
     }
   };
-//handles change for questions
+  //handles change for questions
   const handleOnChangeQuestion = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     qIndex: number
@@ -55,7 +54,7 @@ function AddQuizForm() {
     updatedQuestions[qIndex].text = e.target.value;
     setNewQuiz({ ...newQuiz, questions: updatedQuestions });
   };
-//handles change for answers
+  //handles change for answers
   const handleOnChangeAnswer = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     qIndex: number,
@@ -63,6 +62,10 @@ function AddQuizForm() {
   ) => {
     const updatedQuestions = [...newQuiz.questions];
     updatedQuestions[qIndex].answers[aIndex].answer = e.target.value;
+    // if(aIndex === 0){
+    //   updatedQuestions[qIndex].correctAnswerIndex = e.target.value;
+    // }
+    
     setNewQuiz({ ...newQuiz, questions: updatedQuestions });
   };
 
@@ -133,7 +136,7 @@ function AddQuizForm() {
                   aIndex === 0 ? " (Correct)" : ""
                 }`}
                 value={a.answer}
-                onChange={(e) => handleOnChangeAnswer(e, qIndex, aIndex)}
+               onChange={(e) => handleOnChangeAnswer(e, qIndex, aIndex)}
               />
             ))}
           </Box>

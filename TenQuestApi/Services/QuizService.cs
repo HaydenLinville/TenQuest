@@ -41,6 +41,8 @@ namespace TenQuestApi.Services
             };
             return quiz;
         }
+    
+
         public async Task<(bool Success, string Message, Quiz UpdatedQuiz)> UpdateQuizAsync(UpdateQuiz updatedQuiz)
         {
             var existingQuiz = await _context.Quizzes
