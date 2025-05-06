@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TenQuestApi.Data;
 using TenQuestApi.Models;
-using TenQuestApi.Data;
 using TenQuestApi.Services;
 
 
@@ -49,21 +48,19 @@ public class QuizController : ControllerBase
 
 
     [HttpPost("AddQuiz")]
-    public IActionResult AddQuiz(QuizDefault quizDefault)
+    public async Task<IActionResult> AddQuiz(CreateQuiz createQuiz)
     {
 
-        if (quizDefault.Questions.Count != 10)
+        if (createQuiz.Questions.Count != 10)
             return BadRequest("A quiz must contain exactly 10 questions.");
 
-        foreach (var question in quizDefault.Questions)
+        foreach (var question in createQuiz.Questions)
         {
             if (question.Answers.Count != 4)
                 return BadRequest("Each question must have exactly 4 answers.");
-            if (question.CorrectAnswerIndex < 0 || question.CorrectAnswerIndex > 3)
-                return BadRequest("CorrectAnswerIndex must be between 0 and 3.");
         }
         var serv = CreateQuizService();
-        var changesSaved = serv.CreateQuiz(quizDefault);
+        var changesSaved = await serv.CreateQuiz(createQuiz);
 
         if (changesSaved)
         {

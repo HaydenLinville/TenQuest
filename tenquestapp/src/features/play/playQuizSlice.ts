@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Answer, Questions } from "../quizzes/ModelQuiz";
 
-
 interface PlayState {
   level: number;
   hearts: number;
@@ -9,7 +8,6 @@ interface PlayState {
   gameOn: boolean;
   questions: Questions[];
   currentQuestion: Questions;
-  
 }
 
 const initialState: PlayState = {
@@ -22,63 +20,58 @@ const initialState: PlayState = {
       id: 0,
       text: "",
       answers: Array.from({ length: 4 }, () => ({ id: 0, answer: "" })),
-      correctAnswerIndex: "",
+      correctAnswer: { id: 0, answer: "" },
       hasBeenAsked: false,
     },
   ],
-  currentQuestion: 
-    {
-      id: 0,
-      text: "",
-      answers: Array.from({ length: 4 }, () => ({ id: 0, answer: "" })),
-      correctAnswerIndex: "",
-      hasBeenAsked: false,
-    }
+  currentQuestion: {
+    id: 0,
+    text: "",
+    answers: Array.from({ length: 4 }, () => ({ id: 0, answer: "" })),
+    correctAnswer: { id: 0, answer: "" },
+    hasBeenAsked: false,
+  },
 };
 
 function randomQuestion(questionArray: Questions[]) {
-    var foundFreashQuestion = false;
-    
-    while (!foundFreashQuestion){
-        var randomNumbQuestion = Math.floor(Math.random()* questionArray.length);
-        var singleQuestion = questionArray[randomNumbQuestion];
-        if(!singleQuestion.hasBeenAsked){
-            singleQuestion.answers
-            singleQuestion.hasBeenAsked = true;
-            foundFreashQuestion = true;
-            return singleQuestion
-        }
-    }
+  //var foundFreashQuestion = false
+  questionArray.forEach((questions: Questions) => {
+    var rAnswerArray = randomArray<Answer>(questions.answers);
+    questions.answers = rAnswerArray;
+  });
+
+  var newQuestionArray = randomArray<Questions>(questionArray);
+  return newQuestionArray;
 }
-function randomAnswer(answerArray: Answer[]){
-    let i = answerArray.length -1;
-    for(; i> 0; i--){
-        const j = Math.floor(Math.random() *(i+1));
-        const temp = answerArray[i];
-        answerArray[i] = answerArray[j];
-        answerArray[j] = temp;
-    }
-    return answerArray;
+
+function randomArray<T>(array: Array<T>) {
+  let i = array.length - 1;
+  for (; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
 }
 
 const playQuizSlice = createSlice({
   name: "play",
   initialState,
   reducers: {
-    start(state, action: PayloadAction<PlayState>) {
-        state.gameOn = true;
-        
-
-    },
-    questionsRandom(state, action: PayloadAction<Questions[]>) {
+    start(state, action: PayloadAction<Questions[]>) {
       state.questions = action.payload;
-      var randomQ = randomQuestion(action.payload)
-      if (randomQ != undefined) state.currentQuestion = randomQ;
-      
-
+      var randomQArray = randomQuestion(action.payload);
+      state.currentQuestion = randomQArray[state.level];
     },
+    nextRound(state) {
+      state.level++;
+      state.timer = 30;
+      state.currentQuestion = state.questions[state.level];
+    },
+    checkAnswer(state, action: PayloadAction<Answer>) {},
   },
 });
 
-export const { questionsRandom } = playQuizSlice.actions;
+export const { start } = playQuizSlice.actions;
 export default playQuizSlice.reducer;

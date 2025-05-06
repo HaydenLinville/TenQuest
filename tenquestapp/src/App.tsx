@@ -1,14 +1,11 @@
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-//import Home from "./pages/Home";
-import CreateQuiz from "./pages/CreateQuiz";
 import AllQuizzes from "./pages/AllQuizzes";
 import Layout from "./components/Layout";
 import AddQuizForm from "./features/quizzes/AddQuizForm";
 import EditQuizForm from "./features/quizzes/EditQuizForm";
 import PlayQuiz from "./features/play/PlayQuiz";
-import { ReactNode, useState } from "react";
-import { Quiz } from "./features/api/quizSlice_Api";
+
 
 function App() {
   

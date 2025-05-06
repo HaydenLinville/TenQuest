@@ -6,7 +6,7 @@ namespace TenQuestApi.Models
 
 {
 
-    public class QuizDefault
+    public class CreateQuiz
     {
         // [JsonPropertyName("id")]
         // public int Id { get; set; }
@@ -15,7 +15,7 @@ namespace TenQuestApi.Models
         [JsonPropertyName("category")]
         public int Category { get; set; }
         [JsonPropertyName("questions")]
-        public List<QuestionDefault> Questions { get; set; } = new();
+        public List<CreateQuestion> Questions { get; set; } = new();
 
 
     }

@@ -9,7 +9,7 @@ export interface Questions {
   id: number;
   text: string;
   answers: Answer[];
-  correctAnswerIndex: string;
+  correctAnswer: Answer;
   hasBeenAsked: boolean;
 }
 export interface Answer {

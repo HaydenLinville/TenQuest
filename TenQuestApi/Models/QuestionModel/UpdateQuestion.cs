@@ -6,7 +6,7 @@ namespace TenQuestApi.Models
         public int? Id { get; set; }
         public string Text { get; set; } = string.Empty;
         public List<UpdateAnswer> Answers { get; set; } = new();
-        public int CorrectAnswerIndex { get; set; }
+        public UpdateAnswer CorrectAnswer { get; set; } = null!;
         public bool HasBeenAsked { get; set; }
     }
 }

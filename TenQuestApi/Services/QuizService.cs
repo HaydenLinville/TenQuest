@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using TenQuestApi.Data;
@@ -17,22 +18,26 @@ namespace TenQuestApi.Services
         }
 
 
-        public async Task<FullQuiz> GetQuizAsync(int id)
+        public async Task<GetQuiz> GetQuizAsync(int id)
         {
             var enity = await _context.Quizzes.Include(q => q.Questions).ThenInclude(q => q.Answers).SingleOrDefaultAsync(q => q.Id == id);
             if (enity == null) return null;
-            var quiz = new FullQuiz
+            var quiz = new GetQuiz
             {
                 Id = enity.Id,
                 Title = enity.Title,
                 Category = (int)enity.Catagory,
-                Questions = enity.Questions.Select(q => new QuestionFull
+                Questions = enity.Questions.Select(q => new GetQuestion
                 {
                     Id = q.Id,
                     Text = q.Text,
-                    CorrectAnswerIndex = q.CorrectAnswerIndex,
                     HasBeenAsked = q.HasBeenAsked,
-                    Answers = q.Answers.Select(a => new AnswerDefault
+                    CorrectAnswer = q.Answers.Where(a => a.Id == q.CorrectAnswerId).Select(a => new GetAnswer
+                    {
+                        Id = a.Id,
+                        Answer = a.Text
+                    }).FirstOrDefault(),
+                    Answers = q.Answers.Select(a => new GetAnswer
                     {
                         Id = a.Id,
                         Answer = a.Text
@@ -41,35 +46,79 @@ namespace TenQuestApi.Services
             };
             return quiz;
         }
-        public bool CreateQuiz(QuizDefault quizDefault)
+        public async Task<bool> CreateQuiz(CreateQuiz createQuiz)
         {
             var quiz = new Quiz()
             {
 
-                Catagory = (Category)quizDefault.Category,
-                Title = quizDefault.Title,
-                Questions = [.. quizDefault.Questions.Select(q => {
-
-                var answers = q.Answers.Select(a=> new Answer{
-                    Text = a.Answer,
-                }).ToList();
-                var correctAnswerId = answers.First().Id;
-                return new Questions{
-
-                Text = q.Text,
-                Answers = answers,
-                CorrectAnswerIndex = correctAnswerId,
-                HasBeenAsked = false
-
+                Title = createQuiz.Title,
+                Catagory = (Category)createQuiz.Category,
+                Questions = new List<Questions>()
             };
 
-            })]
-            };
-            _context.Add(quiz);
-            return _context.SaveChanges() > 0;
+            foreach (var q in createQuiz.Questions)
+            {
+                var question = new Questions
+                {
+                    Text = q.Text,
+                    HasBeenAsked = false,
+                    Answers = new List<Answer>()
+                };
+                // quiz.Questions.Add(question);
 
+                foreach (var a in q.Answers)
+                {
+                    question.Answers.Add(new Answer
+                    {
+                        Text = a.Text
+                    });
+                }
+                quiz.Questions.Add(question);
+            }
+
+            _context.Quizzes.Add(quiz);
+            await _context.SaveChangesAsync();
+
+            foreach (var quest in createQuiz.Questions.Select((q, i) => new { q, i }))
+            {
+                var question = quiz.Questions[quest.i];
+                var correctAnswerIndex = quest.q.CorrectAnswerIndex;
+                if (correctAnswerIndex >= 0 && correctAnswerIndex < question.Answers.Count)
+                {
+                    question.CorrectAnswerId = question.Answers[correctAnswerIndex].Id;
+                }
+
+            }
+            var answer = await _context.SaveChangesAsync() > 0;
+            if (answer)
+            {
+                return true;
+            }
+            return false;
+
+            // Catagory = (Category)createQuiz.Category,
+            // Title = createQuiz.Title,
+            // Questions = [.. createQuiz.Questions.Select(q => {
+
+            // var answers = q.Answers.Select(a=> new Answer{
+            //     Text = a.Text,
+            // }).ToList();
+            // var correctAnswerId = answers.First().Id;
+            // return new Questions{
+
+            // Text = q.Text,
+            // Answers = answers,
+            // CorrectAnswerId = correctAnswerId
 
         }
+
+        //    })]
+        //             };
+        // _context.Add(quiz);
+        // return _context.SaveChanges() > 0;
+
+
+        //         }
 
 
         public async Task<(bool Success, string Message, Quiz UpdatedQuiz)> UpdateQuizAsync(UpdateQuiz updatedQuiz)
@@ -84,21 +133,18 @@ namespace TenQuestApi.Services
                 return (false, $"Quiz with ID {updatedQuiz.Id} not found.", null);
             }
 
-            // Update top-level fields
             existingQuiz.Title = updatedQuiz.Title;
             existingQuiz.Catagory = updatedQuiz.Category;
-            Console.WriteLine($"Found {existingQuiz.Questions.Count} Questions in DB.");
 
             foreach (var question in updatedQuiz.Questions)
             {
-                Console.WriteLine($"QuestionId: {question.Id}");
                 var existingQuestion = existingQuiz.Questions.FirstOrDefault(q => q.Id == question.Id);
 
                 if (existingQuestion != null)
                 {
                     existingQuestion.Text = question.Text;
-                    existingQuestion.CorrectAnswerIndex = question.CorrectAnswerIndex;
                     existingQuestion.HasBeenAsked = question.HasBeenAsked;
+                    //existingQuestion.CorrectAnswerId = question.c
 
                     foreach (var answer in question.Answers)
                     {

@@ -5,12 +5,12 @@ namespace TenQuestApi.Models
 
 {
 
-    public class FullQuiz
+    public class GetQuiz
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public int Category { get; set; }
-        public List<QuestionFull> Questions { get; set; } = new();
+        public List<GetQuestion> Questions { get; set; } = new();
 
 
     }

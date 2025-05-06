@@ -7,12 +7,12 @@ namespace TenQuestApi.Data
     {
         public int Id { get; set; } 
         public string Text { get; set; } = string.Empty;
+        public bool HasBeenAsked { get; set; }
         [ForeignKey("Quiz")]
         public int QuizId { get; set; }
         public Quiz Quiz { get; set; } = null!;
         public List<Answer> Answers { get; set; } = new();
-        public int CorrectAnswerIndex { get; set; }
-        public bool HasBeenAsked { get; set; }
+        public int? CorrectAnswerId { get; set; }
 
 
     }

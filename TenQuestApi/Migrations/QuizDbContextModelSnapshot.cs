@@ -21,7 +21,7 @@ namespace TenQuestApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TenQuestApi.Models.Answer", b =>
+            modelBuilder.Entity("TenQuestApi.Data.Answer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,21 +32,18 @@ namespace TenQuestApi.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuestionsId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionsId");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
                 });
 
-            modelBuilder.Entity("TenQuestApi.Models.Questions", b =>
+            modelBuilder.Entity("TenQuestApi.Data.Questions", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,7 +51,7 @@ namespace TenQuestApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CorrectAnswerIndex")
+                    b.Property<int?>("CorrectAnswerId")
                         .HasColumnType("int");
 
                     b.Property<bool>("HasBeenAsked")
@@ -74,7 +71,7 @@ namespace TenQuestApi.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("TenQuestApi.Models.Quiz", b =>
+            modelBuilder.Entity("TenQuestApi.Data.Quiz", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,20 +91,20 @@ namespace TenQuestApi.Migrations
                     b.ToTable("Quizzes");
                 });
 
-            modelBuilder.Entity("TenQuestApi.Models.Answer", b =>
+            modelBuilder.Entity("TenQuestApi.Data.Answer", b =>
                 {
-                    b.HasOne("TenQuestApi.Models.Questions", "Questions")
+                    b.HasOne("TenQuestApi.Data.Questions", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionsId")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Questions");
+                    b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("TenQuestApi.Models.Questions", b =>
+            modelBuilder.Entity("TenQuestApi.Data.Questions", b =>
                 {
-                    b.HasOne("TenQuestApi.Models.Quiz", "Quiz")
+                    b.HasOne("TenQuestApi.Data.Quiz", "Quiz")
                         .WithMany("Questions")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -116,12 +113,12 @@ namespace TenQuestApi.Migrations
                     b.Navigation("Quiz");
                 });
 
-            modelBuilder.Entity("TenQuestApi.Models.Questions", b =>
+            modelBuilder.Entity("TenQuestApi.Data.Questions", b =>
                 {
                     b.Navigation("Answers");
                 });
 
-            modelBuilder.Entity("TenQuestApi.Models.Quiz", b =>
+            modelBuilder.Entity("TenQuestApi.Data.Quiz", b =>
                 {
                     b.Navigation("Questions");
                 });

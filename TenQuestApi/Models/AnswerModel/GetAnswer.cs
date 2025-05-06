@@ -4,7 +4,7 @@ namespace TenQuestApi.Models
 {
 
 
-    public class AnswerDefault
+    public class GetAnswer
     {
         public int Id { get; set; }
 
