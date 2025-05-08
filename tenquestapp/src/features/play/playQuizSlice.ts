@@ -69,7 +69,14 @@ const playQuizSlice = createSlice({
       state.timer = 30;
       state.currentQuestion = state.questions[state.level];
     },
-    checkAnswer(state, action: PayloadAction<Answer>) {},
+    checkAnswer(state, action: PayloadAction<Answer>) {
+      if (state.currentQuestion.correctAnswer != action.payload) {
+        state.hearts--;
+        if (state.hearts == 0) {
+          state.gameOn == false;
+        }
+      }
+    },
   },
 });
 
