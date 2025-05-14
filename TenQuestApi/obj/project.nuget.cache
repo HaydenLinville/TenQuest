@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uoSD9c/om9M=",
+  "dgSpecHash": "mumMEEubgLc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hayden\\TenQuest\\TenQuestApi\\TenQuestApi.csproj",
+  "projectFilePath": "C:\\Users\\Hayden\\TenQuest\\tenquestapi\\TenQuestApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hayden\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Hayden\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

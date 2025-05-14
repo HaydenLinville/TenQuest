@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TenQuestApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+70f6c0a77c81cc72e390af7b9c2d1d5f8aca323f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+70b4a71228885fea9744f7bca0c98d2c58060785")]
 [assembly: System.Reflection.AssemblyProductAttribute("TenQuestApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TenQuestApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -77,6 +77,9 @@ const playQuizSlice = createSlice({
         }
       }
     },
+    gameOver(state) {
+      state.gameOn = false;
+    },
   },
 });
 
