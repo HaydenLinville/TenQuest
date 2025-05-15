@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Hayden\\TenQuest\\tenquestapi\\TenQuestApi.csproj": {}
+    "C:\\Users\\Hayden\\TenQuest\\TenQuestApi\\TenQuestApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Hayden\\TenQuest\\tenquestapi\\TenQuestApi.csproj": {
+    "C:\\Users\\Hayden\\TenQuest\\TenQuestApi\\TenQuestApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Hayden\\TenQuest\\tenquestapi\\TenQuestApi.csproj",
+        "projectUniqueName": "C:\\Users\\Hayden\\TenQuest\\TenQuestApi\\TenQuestApi.csproj",
         "projectName": "TenQuestApi",
-        "projectPath": "C:\\Users\\Hayden\\TenQuest\\tenquestapi\\TenQuestApi.csproj",
+        "projectPath": "C:\\Users\\Hayden\\TenQuest\\TenQuestApi\\TenQuestApi.csproj",
         "packagesPath": "C:\\Users\\Hayden\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Hayden\\TenQuest\\tenquestapi\\obj\\",
+        "outputPath": "C:\\Users\\Hayden\\TenQuest\\TenQuestApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Hayden\\AppData\\Roaming\\NuGet\\NuGet.Config",

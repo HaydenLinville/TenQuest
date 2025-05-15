@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { categoryL } from "./Quizzes";
 import { Typography, FormLabel, Button } from "@mui/material";
 import { useCreateQuizMutation } from "../api/quizSlice_Api";
-import { Quiz, QuizCreate } from "./ModelQuiz";
+import { QuizCreate } from "./ModelQuiz";
 
 function AddQuizForm() {
   const [newQuiz, setNewQuiz] = useState<QuizCreate>({

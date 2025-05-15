@@ -1,5 +1,4 @@
 import CardQuiz from "../../components/CardQuiz";
-import SelectActionCard from "../../components/CardQuiz";
 import { Quiz } from "./ModelQuiz";
 
 
